@@ -1,8 +1,16 @@
-const router = require('express').Router();
+const { Router } = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../../models/User');
+const login = require('./login');
 
-// TODO: Add comments describing the functionality of this `login` route
+
+const router = Router();
+
+router.use('/login', login)
+
+module.exports = router;
+
+
 router.post('/login', async (req, res) => {
   try {
     const userData = await User.findOne({ where: { email: req.body.email } });
@@ -24,5 +32,3 @@ router.post('/login', async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-module.exports = router;
